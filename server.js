@@ -6,9 +6,9 @@ const fs = require('fs').promises;
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
-const { mongoClient } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const uri = process.env.MONGODB_URI;
-const client = new mongoClient(uri);
+const client = new MongoClient(uri);
 
 // MongoDb Connection
 async function connectToDatabase() {
