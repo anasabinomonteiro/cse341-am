@@ -1,12 +1,23 @@
 // helpful link for converting image to base64: https://elmah.io/tools/base64-image-encoder/
-async function apiFetch(url) {
-  const response = await fetch(url);
+async function apiFetch(endpoint) {
+  const baseUrl = window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : '';
+
+  const response = await fetch(`${baseUrl}${endpoint}`);
   const data = await response.json();
   return data;
 }
 
+// async function apiFetch(url) {
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;
+// }
+
 const getData = async () => {
-  const data = await apiFetch('http://localhost:8080/professional');
+  const data = await apiFetch('/professional');
+  // const data = await apiFetch('http://localhost:8080/professional');
   displayAllData(data);
 };
 
