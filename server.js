@@ -1,9 +1,25 @@
-// 
+require('dotenv').config();
+
+// Settings
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+const { mongoClient } = require('mongodb');
+const uri = process.env.MONGODB_URI;
+const client = new mongoClient(uri);
+
+// MongoDb Connection
+async function connectToDatabase() {
+    try {
+        await client.connect();
+        console.log('✅ Connected to MongoDB');
+    } catch (error) {
+        console.error('❌Error connecting to MongoDB:', error);
+    }
+}
+connectToDatabase();
 
 // Middleware to serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
