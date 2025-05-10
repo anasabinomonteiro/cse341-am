@@ -1,11 +1,19 @@
 // 
 const express = require('express');
-const { text } = require('stream/consumers');
 const fs = require('fs').promises;
+const path = require('path');
 const app = express();
 const port = 8080;
 
-// Get to /professional
+// Middleware to serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route for the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Route for API
 app.get('/professional', async (req, res) => {
     let base64Image;
     try {
@@ -19,13 +27,13 @@ app.get('/professional', async (req, res) => {
         professionalName: 'Ana Lucia da Silva Monteiro',
         base64Image: base64Image,
         nameLink: {
-            firstName: 'Ana',
+            firstName: 'Ana ',
             url: "https://www.linkedin.com/in/analuciamonteiro/"
         },
-        primaryDescription: 'Software Engineer',
-        workDescription: 'Ana is a software engineer with 5 years of experience in web development. She has worked on various projects using JavaScript, React, and Node.js.',
-        workDescription2: 'Ana is a software engineer with 5 years of experience in web development. She has worked on various projects using JavaScript, React, and Node.js.',
-        linkTitleText: 'LinkedIn',
+        primaryDescription: 'System Analyst',
+        workDescription1: 'With 16 years of solid experience in the financial, tax and billing areas, in addition to notable growth in the last 6 years in the Information Technology area.',
+        workDescription2: 'Working especially as a Protheus Systems Analyst - Totvs, I bring a diverse and valuable background.',
+        linkTitleText: 'Links',
         linkedInLink: {
             text: 'LinkedIn',
             url: 'https://www.linkedin.com/in/analuciamonteiro/'
@@ -34,7 +42,7 @@ app.get('/professional', async (req, res) => {
             text: 'GitHub',
             url: 'https://github.com/anasabinomonteiro'
         },
-        contactText: 'Contact me'
+        contactText: 'Contact me on LinkedIn'
     };
 
     // Send the professional data as a JSON response
